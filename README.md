@@ -1,2 +1,3 @@
 # 3DPrinter
-Starting with a Plastibot-Mendel printer, adding modifications to make it my own.
+I bought a Plastibot-Mendel 3D Printer in 2013, and have since made revisions and updates here and there.
+I've created this repository to share updates for any who want to try them out on their own.
