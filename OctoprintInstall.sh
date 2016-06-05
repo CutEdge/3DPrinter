@@ -50,15 +50,20 @@ cd /usr/share/mjpg-streamer/mjpg-streamer-experimental/
 cmake -G "Unix Makefiles"
 make
 mkdir /usr/local/mjpg-streamer
-cp mjpg_streamer /usr/local/mjpg-streamer
-cp output_http.so input_file.so input_uvc.so /usr/local/mjpg-streamer
+cp mjpg_streamer /usr/local/share/mjpg-streamer
+cp ./plugins/output_http/output_http.so ./plugins/input_file/input_file.so ./plugins/input_uvc/input_uvc.so /usr/local/share/mjpg-streamer
 cp -r www /usr/local/mjpg-streamer
-cd /usr/local/mjpg-streamer
-./mjpg_streamer -i "/usr/local/mjpg-streamer/input_uvc.so" -o "/usr/local/mjpg-streamer/output_http.so -w /usr/local/mjpg-streamer/www" -b
+/usr/local/share/mjpg-streamer/mjpg_streamer -i "/usr/local/share/mjpg-streamer/input_uvc.so" -o "/usr/local/share/mjpg-streamer/output_http.so -w /usr/local/share/mjpg-streamer/www" -b
 cd /etc/init.d
 wget http://www.repetier-server.com/en/software/extras/mjpgstreamer-init-debian/mjpgstreamer
 chmod 755 mjpgstreamer
 update-rc.d mjpgstreamer defaults
+echo "Note: Before this works, you have to edit the file
+/etc/init.d/mjpgstreamer
+Change the line that says DAEMON=... to say:
+DAEMON=/usr/local/share/mjpg-streamer/mjpg_streamer
+In the start) section, change the line that says $DAEMON -i ... to say:
+$DAEMON -i /usr/local/share/mjpg-streamer/input_uvc.so -o \"/usr/local/share/mjpg-streamer/output_http.so -w /usr/local/share/mjpg-streamer/www\" -b &
 
 #Instructions
 echo "Plastibot 3D Printer
@@ -103,19 +108,6 @@ allow-hotplug wlan0
 iface wlan0 inet dhcp
 wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
 " > /etc/network/interfaces
-
-
-
-#Users Setup
-echo "pi:
-  active: true
-  apikey: null
-  password: acfd335bc532d570b7992a20471a98c4452611b899c962cb1c84e95ba8799ea37bbb$
-  roles:
-  - user
-  - admin
-  settings: {}
-" > /home/*/.octoprint/users.yaml
 
 
 #Config Setup
@@ -184,8 +176,7 @@ server:
     serverRestartCommand: ''
     systemRestartCommand: ''
     systemShutdownCommand: ''
-  firstRun: false
-  secretKey: grHM0QUheDH360LlzOl3Jcm3mEhhiFlV
+  firstRun: true
 slicing:
   defaultProfiles: {}
 system:
