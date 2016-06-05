@@ -22,8 +22,13 @@
 ############################
 
 
+
+
+
+
+
 apt-get update
-apt-get install -y python2.7 python-pip python-setuptools cmake gcc gcc++ python-numpy git freecad
+apt-get install -y python2.7 python-pip python-setuptools cmake gcc gcc++ python-numpy git
 
 #OctoPrint
 git clone https://github.com/foosel/OctoPrint.git /usr/share/OctoPrint
